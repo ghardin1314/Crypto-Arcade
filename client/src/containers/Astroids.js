@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 20,
   },
   popper: {
-    maxWidth: "50%",
+    maxWidth: "65%",
   },
   papper: {
     background: theme.palette.tertiary.main,
@@ -166,7 +166,7 @@ export default function Astroids() {
           popperOptions={{
             modifiers: {
               offset: {
-                offset: "0,-80%",
+                offset: "0,-90%",
               },
             },
           }}
