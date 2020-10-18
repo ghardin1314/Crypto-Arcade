@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+    backend:
+      container_name: auth
+      build: ./backend
+      command: gunicorn --bind 0.0.0.0:5000 manage:app
+      expose:
+        - "5000"
+      env_file:
+        - ./backend/.env
+      depends_on:
+        - postgres
+      environment:
+        POSTGRES_URL: postgres
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.backend.rule=Host(`api.crypto-arcade.xyz`)'
+        - 'traefik.http.routers.backend.tls=true'
+        - 'traefik.http.routers.backend.tls.certresolver=lets-encrypt'
+    postgres:
+      container_name: postgres
+      image: postgres:9.3
+      volumes:
+        - postgres_data:/root
+      expose:
+        - "5432"
+      env_file:
+        - ./backend/.env
+      restart: always
+    server:
+      container_name: server
+      build: ./server
+      expose:
+        - '8080'
+      restart: always
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.server.rule=Host(`server.crypto-arcade.xyz`)'
+        - 'traefik.http.routers.server.tls=true'
+        - 'traefik.http.routers.server.tls.certresolver=lets-encrypt'
+    traefik:
+      container_name: traefik
+      image: traefik:2.3.1
+      restart: always
+      ports:
+        - '80:80'
+        - '443:443'
+      volumes:
+        - ./traefik:/etc/traefik
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  postgres_data:

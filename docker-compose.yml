@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  backend:
+    container_name: docker-arcade-auth
+    build: ./backend
+    command: python3 run.py -h 0.0.0.0
+    volumes:
+      - ./backend/:/usr/src/backend/
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_URL: postgres
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5432:5432"
+    restart: always
+  server:
+    container_name: docker-arcade-server
+    build: ./server
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  postgres_data:
