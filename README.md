@@ -1,20 +1,22 @@
-# TRX-Arcade
+# Crypto Arcade
 
-start client:
-cd client; npm run start
+See it live here:
 
-start server:
-cd server; npx nodemon server.js
+www.crypto-arcade.xyz
 
-start Eth node:
-truffle develop; migrate
+Checkout my walk through explination of this project here: 
 
-start backend:
-cd backend; python run.py
+https://medium.com/@g.hardin1314/crypto-arcade-my-first-ethereum-dapp-where-high-scores-pay-f78a11d74a8
 
-wipe db:
-cd backend
-python manage.py resetDB
-python manage.py db upgrade
-python manage.py db migrate
+Project Structure:
 
+- Backend: Flask App that handles authentication
+- Client: React front end that houses the user interface
+- Contracts: Solidity smart contracts deployed on Rinkeby testnet
+- Server: Node websocket server for gameplay
+- test: Unit tests of Smart Contracts
+- traefik: Config files to https reverse proxy
+
+This project forked Reacteroids, which is a browser implementation of the classic Asteroids arcade game. The repo can be found here:
+
+https://github.com/chriz001/Reacteroids
