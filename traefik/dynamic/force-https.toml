@@ -8,13 +8,6 @@
 [http.middlewares]
   [http.middlewares.force-https.redirectScheme]
     scheme = "https"
-  [http.middlewares.backend-cors]
-    [http.middlewares.backend-cors.headers]
-      accessControlAllowCredentials = true
-      accessControlAllowMethods= ["GET", "OPTIONS", "PUT", "DELETE"]
-      accessControlAllowOrigin = "*"
-      accessControlMaxAge = 86400
-      addVaryHeader = true
 
 [http.services]
   [http.services.noop.loadBalancer]
